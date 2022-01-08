@@ -1,3 +1,5 @@
+@import "./variables";
+
 * {
 	margin: 0;
 	padding: 0;
@@ -9,4 +11,30 @@
 	appearance: none;
 	outline: none;
 	border: none;
+}
+
+button {
+	border: none;
+	appearance: none;
+	outline: none;
+}
+
+a {
+	text-decoration: none;
+	display: block;
+}
+
+.header.top-header {
+	display: flex;
+	padding: 10px;
+	align-items: center;
+
+	.logo-wrapper {
+		flex-grow: 1;
+
+		.logo {
+			font-weight: 300;
+			color: map-get($map: $colors, $key: "blue");
+		}
+	}
 }

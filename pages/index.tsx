@@ -1,7 +1,8 @@
 import React from "react";
 import Layout from "../src/layout";
-//@ts-ignore
-import {Slide} from "react-slideshow-image";
+import {Swiper, SwiperSlide} from "swiper/react";
+import SwiperCore, {Pagination, Autoplay} from "swiper";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 
 const slideImages = [
 	{
@@ -19,31 +20,45 @@ const slideImages = [
 ];
 
 function Home() {
+	SwiperCore.use([Pagination, Autoplay]);
 	return (
 		<Layout>
 			<div className="slider-content">
-				<div className="base-background">
-					<div className="background-image slider-background-image">
-						<div className="slide-container">
-							<Slide>
-								{slideImages.map((slideImage, index) => (
-									<div className="each-slide" key={index}>
-										<div
-											style={{
-												backgroundImage: `url(${slideImage.url})`,
-											}}
-										>
-											<span>{slideImage.caption}</span>
-										</div>
-									</div>
-								))}
-							</Slide>
-						</div>
+				<Swiper
+					spaceBetween={0}
+					slidesPerView={1}
+					onSlideChange={() => console.log("slide change")}
+					onSwiper={(swiper) => console.log(swiper)}
+					pagination={{
+						clickable: true,
+					}}
+					loop={true}
+					autoplay={{delay: 5000, disableOnInteraction: true}}
+				>
+					{slideImages.map((image) => {
+						return (
+							<SwiperSlide className="swiper-slide">
+								<img
+									src={image.url}
+									alt={image.caption}
+									className="swiper-image"
+								/>
+							</SwiperSlide>
+						);
+					})}
+				</Swiper>
+				<div className="title-content swiper-top-layer">
+					<div className="layer-text">
+						Find a place you'll love to live
 					</div>
-				</div>
-				<div className="title-content slider-images-top-layer">
-					<div className="layer-text"></div>
 					<div className="layer-form search">
+						<div className="filter-box">
+							<div className="filter-list">
+								<div className="filter-items active">Buy</div>
+								<div className="filter-items">Rent</div>
+								<div className="filter-items">Short-let</div>
+							</div>
+						</div>
 						<form
 							action="#"
 							className="form-group searchbox"
@@ -55,12 +70,15 @@ function Home() {
 									className="text-control inputbox"
 									role="searchbox"
 									autoComplete="new-search"
+									placeholder="Search for City, Neighbourhood..."
 								/>
 								<button
 									role="search"
 									className="search-btn"
 									id="search-trigger"
-								></button>
+								>
+									<SearchRoundedIcon fontSize="medium" />
+								</button>
 							</div>
 						</form>
 					</div>
